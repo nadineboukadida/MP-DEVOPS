@@ -16,7 +16,7 @@ describe('AppController', () => {
 
   describe('root', () => {
     it('should return users correct length', () => {
-      expect(appController.getHello()).toBe(2);
+      expect(appController.getUsers()).toBe(2);
     });
   });
 });
