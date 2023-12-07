@@ -22,5 +22,6 @@ jobs:
 
       - name: Build docker image
         run: |
-            docker build -t ${{ env.image_name }}:latest .
+            docker images
+            docker build -t mp-devops:latest .
             docker push nadine2001/mp-devops:latest
