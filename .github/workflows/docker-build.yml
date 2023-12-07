@@ -16,6 +16,7 @@ jobs:
 
       - name: Build docker image
         run: |
+            ls
             cd MP-DEVOPS
             docker build -t ${{ env.image_name }}:${{ github.run_number }} .
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
