@@ -1,0 +1,22 @@
+name: Docker Build and Push
+env:
+    image_name: mp-devops
+on:
+  push:
+    branches:
+      - master 
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build docker image
+        run: |
+            cd MP-DEVOPS
+            docker build -t ${{ env.image_name }}:${{ github.run_number }} .
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+            docker push nadine2001/mp-devops:latest
