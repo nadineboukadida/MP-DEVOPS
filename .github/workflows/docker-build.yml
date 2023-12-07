@@ -24,8 +24,22 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
-        run: npm test
+      - name: Run tests and generate report
+        run: |
+          # Run tests with coverage (replace with your actual test command)
+          npm test -- --coverage
+  
+          # Install jest-html-reporter
+          npm install --save-dev jest-html-reporter
+  
+          # Generate HTML report
+          npx jest --coverage --reporters=default --reporters=jest-html-reporter
+  
+      - name: Upload coverage report as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-report
+          path: coverage/lcov-report
 
       - name: Build Docker image
         run: |
