@@ -23,4 +23,4 @@ jobs:
       run: ssh -o StrictHostKeyChecking=no azureuser@172.191.162.233 "sudo docker pull nadine2001/mp-devops:latest"
 
     - name: Run Docker container
-      run: ssh -o StrictHostKeyChecking=no azureuser@172.191.162.233 "sudo docker run -d nadine2001/mp-devops:latest"
+      run: ssh -o StrictHostKeyChecking=no azureuser@172.191.162.233 "sudo docker run -p 3000:3000 -d nadine2001/mp-devops:latest"
