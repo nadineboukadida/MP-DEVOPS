@@ -1,0 +1,26 @@
+name: Azure VM Deployment
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.1
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Connect to Azure VM
+      run: ssh -o StrictHostKeyChecking=no azureuser@172.191.162.233 "echo Connected successfully"
+
+    - name: Pull Docker image
+      run: ssh -o StrictHostKeyChecking=no azureuser@172.191.162.233 "docker pull nadine2001/mp-devops:latest"
+
+    - name: Run Docker container
+      run: ssh -o StrictHostKeyChecking=no azureuser@172.191.162.233 "docker run -d nadine2001/mp-devops:latest"
