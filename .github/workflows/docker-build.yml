@@ -22,6 +22,6 @@ jobs:
 
       - name: Build docker image
         run: |
-            docker build .
+            docker build -t mp-devops .
             docker tag mp-devops nadine2001/mp-devops:latest
             docker push nadine2001/mp-devops:latest
