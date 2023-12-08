@@ -2,6 +2,14 @@ name: Azure VM Deployment
 
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy'
+        required: true
+        default: 'test'
+        options:
+          - 'test'
+          - 'production'
 
 jobs:
   deploy:
@@ -16,11 +24,23 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+    - name: Determine IP address based on environment
+      id: set-ip
+      run: |
+        if [ "${{ github.event.inputs.environment }}" == "test" ]; then
+          echo "IP_ADDRESS=172.191.162.233" >> $GITHUB_ENV
+        elif [ "${{ github.event.inputs.environment }}" == "production" ]; then
+          echo "IP_ADDRESS=172.191.162.233" >> $GITHUB_ENV
+        else
+          echo "Invalid environment specified"
+          exit 1
+        fi
+
     - name: Connect to Azure VM
-      run: ssh -o StrictHostKeyChecking=no azureuser@172.191.162.233 "echo Connected successfully"
+      run: ssh -o StrictHostKeyChecking=no azureuser@${{ env.IP_ADDRESS }} "echo Connected successfully"
 
     - name: Pull Docker image
-      run: ssh -o StrictHostKeyChecking=no azureuser@172.191.162.233 "sudo docker pull nadine2001/mp-devops:latest"
+      run: ssh -o StrictHostKeyChecking=no azureuser@${{ env.IP_ADDRESS }} "sudo docker pull nadine2001/mp-devops:latest"
 
     - name: Run Docker container
-      run: ssh -o StrictHostKeyChecking=no azureuser@172.191.162.233 "sudo docker run -p 3000:3000 -d nadine2001/mp-devops:latest"
+      run: ssh -o StrictHostKeyChecking=no azureuser@${{ env.IP_ADDRESS }} "sudo docker run -p 3000:3000 -d nadine2001/mp-devops:latest"
