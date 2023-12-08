@@ -9,10 +9,6 @@ export class AppController {
   getUsers(): number {
     return this.appService.getUsers();
   }
-  @Get(':name')
-  getPersonalizedGreeting(@Param('name') name: string): string {
-    return this.appService.getPersonalizedGreeting(name);
-  }
 
   @Get('users')
   getFakeUsers(): any[] {
