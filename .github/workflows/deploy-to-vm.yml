@@ -1,15 +1,16 @@
 name: Azure VM Deployment
 
-on:
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Environment to deploy'
-        required: true
-        default: 'test'
-        options:
-          - 'test'
-          - 'production'
+on: 
+    workflow_dispatch:
+      inputs:
+        environment:
+          description: 'Environment'
+          required: true
+          default: develop
+          type: choice
+          options:
+          - develop
+          - production
 
 jobs:
   deploy:
@@ -27,7 +28,7 @@ jobs:
     - name: Determine IP address based on environment
       id: set-ip
       run: |
-        if [ "${{ github.event.inputs.environment }}" == "test" ]; then
+        if [ "${{ github.event.inputs.environment }}" == "develop" ]; then
           echo "IP_ADDRESS=172.191.162.233" >> $GITHUB_ENV
         elif [ "${{ github.event.inputs.environment }}" == "production" ]; then
           echo "IP_ADDRESS=172.191.162.233" >> $GITHUB_ENV
