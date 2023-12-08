@@ -22,4 +22,14 @@ export class AppService {
     }
     return fakeUsers;
   }
+  private animals = [
+    { id: 1, name: 'Dog', type: 'Mammal' },
+    { id: 2, name: 'Cat', type: 'Mammal' },
+    { id: 3, name: 'Parrot', type: 'Bird' },
+    // Add more dummy data as needed
+  ];
+
+  getAvailableAnimals(): { id: number; name: string; type: string }[] {
+    return this.animals;
+  }
 }

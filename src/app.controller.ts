@@ -18,4 +18,8 @@ export class AppController {
   getFakeUsers(): any[] {
     return this.appService.getFakeUsers();
   }
+  @Get('available')
+  getAvailableAnimals(): { id: number; name: string; type: string }[] {
+    return this.appService.getAvailableAnimals();
+  }
 }
